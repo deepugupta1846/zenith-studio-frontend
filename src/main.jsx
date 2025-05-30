@@ -10,6 +10,7 @@ import './index.css';
 import OrderPage from './components/orderPage/OrderPage';
 import LoginPage from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
+import RegisterPage from './components/login/RegisterPage';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/order" element={<OrderPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

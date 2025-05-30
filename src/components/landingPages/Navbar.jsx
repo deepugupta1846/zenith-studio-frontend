@@ -77,6 +77,7 @@ export default function Navbar() {
         >
           {darkMode ? "☀️" : "🌙"}
         </button> */}
+        <NavLink to="/register">Register</NavLink>
         <NavLink to="/login" className="btn btn-primary btn-sm">
           Login
         </NavLink>
