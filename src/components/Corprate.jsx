@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "./landingPages/Navbar";
+import Footer from "./landingPages/Footer";
 
 export default function Corprate({ children }) {
   return (
@@ -13,11 +14,7 @@ export default function Corprate({ children }) {
       </main>
 
       {/* Footer */}
-      <footer className="footer footer-center p-4 bg-base-300 text-base-content">
-        <aside>
-          <p>© 2025 Zenith Studio. All rights reserved.</p>
-        </aside>
-      </footer>
+      <Footer/>
     </div>
   );
 }

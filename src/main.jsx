@@ -11,9 +11,12 @@ import OrderPage from './components/orderPage/OrderPage';
 import LoginPage from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import RegisterPage from './components/login/RegisterPage';
+import { MantineProvider } from "@mantine/core";
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+      <MantineProvider withGlobalStyles withNormalizeCSS>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
@@ -23,5 +26,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
+    </MantineProvider>
   </React.StrictMode>
 );

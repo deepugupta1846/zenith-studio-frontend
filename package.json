@@ -10,14 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/carousel": "^8.0.2",
     "@tailwindcss/postcss": "^4.1.7",
     "@tailwindcss/vite": "^4.1.7",
     "clsx": "^2.1.1",
     "daisyui": "^5.0.37",
     "formik": "^2.4.6",
+    "framer-motion": "^12.15.0",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
     "swiper": "^11.2.7",
     "yup": "^1.6.1"
