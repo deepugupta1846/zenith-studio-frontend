@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Corprate from "../Corprate";
@@ -6,6 +6,21 @@ import Corprate from "../Corprate";
 export default function RegisterPage() {
   const [otpSent, setOtpSent] = useState(false);
   const [serverError, setServerError] = useState("");
+  const [timer, setTimer] = useState(0); // in seconds
+
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const formatTime = (seconds) => {
+    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const s = String(seconds % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  };
 
   const initialValues = {
     fullName: "",
@@ -31,32 +46,57 @@ export default function RegisterPage() {
   const checkEmailAndSendOtp = async (email) => {
     try {
       setServerError("");
-      const res = await fetch(`http://localhost:5000/api/users/check-email?email=${email}`);
+      const res = await fetch(`http://localhost:5000/api/auth/check-email?email=${email}`);
       const data = await res.json();
       if (data.exists) {
         throw new Error("Email already registered");
       }
 
-      const otpRes = await fetch(`http://localhost:5000/api/users/send-otp`, {
+      const otpRes = await fetch(`http://localhost:5000/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       if (!otpRes.ok) throw new Error("Failed to send OTP");
+
       setOtpSent(true);
+      setTimer(300); // 5 minutes
+    } catch (err) {
+      setServerError(err.message);
+    }
+  };
+
+  const handleResendOtp = async (email) => {
+    try {
+      setServerError("");
+      const otpRes = await fetch(`http://localhost:5000/api/auth/send-otp`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!otpRes.ok) throw new Error("Failed to resend OTP");
+
+      setTimer(300);
     } catch (err) {
       setServerError(err.message);
     }
   };
 
   const handleSubmit = async (values, actions) => {
+    const data = {
+      name: values.fullName,
+      email: values.email,
+      password: values.password,
+      otp: values.otp
+    };
     setServerError("");
     try {
-      const res = await fetch("http://localhost:5000/api/users/register", {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) throw new Error("Registration failed");
@@ -94,20 +134,32 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="label" htmlFor="email">Email</label>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-center">
                     <Field
                       type="email"
                       name="email"
                       placeholder="Enter your email"
                       className="input input-bordered w-full"
                     />
-                    {!otpSent && (
+                    {!otpSent ? (
                       <button
                         type="button"
                         className="btn btn-outline btn-sm"
                         onClick={() => checkEmailAndSendOtp(values.email)}
                       >
                         Send OTP
+                      </button>
+                    ) : timer > 0 ? (
+                      <span className="text-sm text-gray-500 w-24 text-right">
+                        {formatTime(timer)}
+                      </span>
+                    ) : (
+                      <button
+                        type="button"
+                        className="btn btn-outline btn-sm"
+                        onClick={() => handleResendOtp(values.email)}
+                      >
+                        Resend OTP
                       </button>
                     )}
                   </div>
@@ -126,6 +178,14 @@ export default function RegisterPage() {
                     <ErrorMessage name="otp" component="div" className="text-sm text-red-500 mt-1" />
                   </div>
                 )}
+
+                <div>
+            <label className="label">Select User Type</label>
+            <select name="deliveryOption" className="select select-bordered w-full">
+              <option>Customer</option>
+              <option>Professional</option>
+            </select>
+          </div>
 
                 <div>
                   <label className="label" htmlFor="password">Password</label>

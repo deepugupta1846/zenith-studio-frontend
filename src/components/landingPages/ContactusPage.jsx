@@ -75,22 +75,7 @@ export default function ContactUs() {
           </div>
         </form>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div>
-            <h3 className="text-lg font-semibold text-red-600">Address</h3>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">
-              Zenith Studio, Main Road, YourCity
-            </p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-red-600">Phone</h3>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">+91 98765 43210</p>
-          </div>
-          <div>
-            <h3 className="text-lg font-semibold text-red-600">Email</h3>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">hello@zenithstudio.com</p>
-          </div>
-        </div>
+       
       </div>
     </div>
   );

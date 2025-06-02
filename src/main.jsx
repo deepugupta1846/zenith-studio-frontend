@@ -12,10 +12,13 @@ import LoginPage from './components/login/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import RegisterPage from './components/login/RegisterPage';
 import { MantineProvider } from "@mantine/core";
+import { store } from './store/store';
+import { Provider } from "react-redux";
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    <Provider store={store}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
     <BrowserRouter>
       <Routes>
@@ -27,5 +30,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </Routes>
     </BrowserRouter>
     </MantineProvider>
+    </Provider>
   </React.StrictMode>
 );
