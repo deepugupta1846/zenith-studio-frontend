@@ -7,7 +7,7 @@ import { loginUser } from "../../store/reducers/authSlice";
 
 export default function LoginPage() {
   const dispatch = useDispatch()
-  const {user} = useSelector((state)=> state.auth)
+  const {user, loading, error} = useSelector((state)=> state.auth)
   console.log(user)
   const navigate = useNavigate()
   const initialValues = {
@@ -24,6 +24,9 @@ export default function LoginPage() {
     try {
       actions.setSubmitting(true);
       dispatch(loginUser(values))
+      loginUser.rejected((error)=>{
+        console.log(error)
+      })
     } catch (error) {
       alert(error.message);
     } finally {
@@ -71,7 +74,11 @@ export default function LoginPage() {
                   className="btn btn-primary w-full"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Logging in..." : "Login"}
+                  {loading ? (
+    <span className="loading loading-spinner loading-sm"></span>
+  ) : (
+    "Login"
+  )}
                 </button>
 
                 <p className="text-sm text-center mt-4">
