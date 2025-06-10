@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut, User, List } from "lucide-react";
+import { LogOut, User, List, DockIcon, Timer } from "lucide-react";
+import { FaRupeeSign } from "react-icons/fa";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -16,9 +17,33 @@ export default function Sidebar() {
         <h2 className="text-2xl font-bold mb-8 text-brand">Zenith Studio</h2>
         <ul className="menu space-y-2">
           <li>
-            <Link to="/dashboard/orders" className="flex items-center gap-2">
+            <Link to="/dashboard/order-list/" className="flex items-center gap-2">
               <List size={18} />
               All Orders
+            </Link>
+          </li>
+        </ul>
+        <ul className="menu space-y-2">
+          <li>
+            <Link to="/dashboard/pricing/" className="flex items-center gap-2">
+              <FaRupeeSign size={18} />
+              Pricing
+            </Link>
+          </li>
+        </ul>
+        <ul className="menu space-y-2">
+          <li>
+            <Link to="/dashboard/pricing/" className="flex items-center gap-2">
+              <DockIcon size={18} />
+              Status
+            </Link>
+          </li>
+        </ul>
+        <ul className="menu space-y-2">
+          <li>
+            <Link to="/dashboard/pricing/" className="flex items-center gap-2">
+              <Timer size={18} />
+              History
             </Link>
           </li>
         </ul>

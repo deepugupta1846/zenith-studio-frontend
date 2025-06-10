@@ -4,11 +4,11 @@ import Corprate from "../Corprate";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/reducers/authSlice";
+import AuthService from "../../config/auth/AuthService";
 
 export default function LoginPage() {
   const dispatch = useDispatch()
-  const {user, loading, error} = useSelector((state)=> state.auth)
-  console.log(user)
+  const {user, loading, token} = useSelector((state)=> state.auth)
   const navigate = useNavigate()
   const initialValues = {
     email: "",
@@ -23,10 +23,13 @@ export default function LoginPage() {
   const handleSubmit = async (values, actions) => {
     try {
       actions.setSubmitting(true);
-      dispatch(loginUser(values))
-      loginUser.rejected((error)=>{
-        console.log(error)
-      })
+      const response = await dispatch(loginUser(values))
+      if (loginUser.fulfilled.match(response)) {
+        navigate("/dashboard");
+      }
+      if (loginUser.rejected.match(response)) {
+       console.log(response)
+      }
     } catch (error) {
       alert(error.message);
     } finally {
@@ -75,10 +78,10 @@ export default function LoginPage() {
                   disabled={isSubmitting}
                 >
                   {loading ? (
-    <span className="loading loading-spinner loading-sm"></span>
-  ) : (
-    "Login"
-  )}
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                "Login"
+              )}
                 </button>
 
                 <p className="text-sm text-center mt-4">

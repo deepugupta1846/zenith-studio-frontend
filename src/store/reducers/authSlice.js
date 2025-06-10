@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AuthService from "../../config/auth/AuthService";
 const SERVER_URL = "http://localhost:5000"
 // Async thunk for registration
 export const registerUser = createAsyncThunk(
@@ -35,7 +36,9 @@ export const loginUser = createAsyncThunk(
         const error = await res.json();
         throw new Error(error.message || "Login failed");
       }
-      return await res.json();
+      const response = await res.json();
+      AuthService.setAuthToken(response.token)
+      return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -67,7 +70,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        localStorage.setItem("token", action.payload.token);
+        AuthService.setAuthToken(response.token)
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;

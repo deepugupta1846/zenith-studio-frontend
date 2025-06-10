@@ -14,6 +14,8 @@ import RegisterPage from './components/login/RegisterPage';
 import { MantineProvider } from "@mantine/core";
 import { store } from './store/store';
 import { Provider } from "react-redux";
+import ActivatePage from './components/login/ActivatePage';
+import AllRoutes from './assets/routes/AllRoutes';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -21,13 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <MantineProvider withGlobalStyles withNormalizeCSS>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/order" element={<OrderPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/register" element={<RegisterPage />} />
-      </Routes>
+      <AllRoutes/>
     </BrowserRouter>
     </MantineProvider>
     </Provider>

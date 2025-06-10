@@ -1,4 +1,3 @@
-// Keep all your existing imports
 import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -11,11 +10,17 @@ export default function OrderPage() {
   const [districts, setDistricts] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [pricing, setPricing] = useState({});
+  const [defaultOrderNo, setDefaultOrderNo] = useState("");
 
   useEffect(() => {
     const indianStates = State.getStatesOfCountry("IN");
     setStates(indianStates);
+    setDefaultOrderNo(generateOrderNumber());
   }, []);
+
+  const generateOrderNumber = () => {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+  };
 
   const handleFileUpload = (e, setFieldValue) => {
     const files = Array.from(e.target.files);
@@ -23,7 +28,6 @@ export default function OrderPage() {
     setFieldValue("albumFiles", imageFiles);
     setImagePreviews(imageFiles.map((file) => URL.createObjectURL(file)));
 
-    // Pricing calculation
     const baseRate = 80;
     const fixedCost = 300;
     const gstRate = 0.18;
@@ -33,14 +37,7 @@ export default function OrderPage() {
     const gst = subtotal * gstRate;
     const total = subtotal + gst;
 
-    setPricing({
-      baseRate,
-      quantity,
-      fixedCost,
-      subtotal,
-      gst,
-      total
-    });
+    setPricing({ baseRate, quantity, fixedCost, subtotal, gst, total });
   };
 
   const initialValues = {
@@ -59,7 +56,7 @@ export default function OrderPage() {
     orderDate: "",
     deliveryDate: "",
     albumFiles: [],
-    orderNo: "",
+    orderNo: defaultOrderNo,
     notes: "",
     email: "",
     mobileNumber: "",
@@ -70,12 +67,7 @@ export default function OrderPage() {
     paperType: Yup.string().required("Paper Type is required"),
     albumSize: Yup.string().required("Album Size is required"),
     email: Yup.string().email("Invalid email address").required("Email is required"),
-    mobileNumber: Yup.string()
-      .matches(/^[6-9]\d{9}$/, "Enter a valid 10-digit Indian mobile number")
-      .required("Mobile number is required"),
-    pincode: Yup.string()
-      .matches(/^[1-9][0-9]{5}$/, "Enter a valid 6-digit Indian pincode")
-      .notRequired(),
+    mobileNumber: Yup.string().required("Mobile number is required"),
     designPrint: Yup.string().required("Please select a Print/Design option"),
   });
 
@@ -92,21 +84,34 @@ export default function OrderPage() {
   const handleSubmit = async (values) => {
     const form = new FormData();
     Object.entries(values).forEach(([key, value]) => {
-      // if (key === "albumFiles") {
-        // value.forEach((file) => form.append("albumFiles[]", file));
-      // } else {
+      if (key === "albumFiles") {
+        // value.forEach((file) => form.append("albumFiles", file));
+      } else {
         form.append(key, value);
-      // }
+      }
+    });
+    Object.entries(values).forEach(([key, value]) => {
+      if (key === "albumFiles") {
+        value.forEach((file) => form.append("albumFiles", file));
+      } else {
+        // form.append(key, value);
+      }
     });
 
     try {
       const res = await fetch("http://localhost:5000/api/orders", {
         method: "POST",
-       
         body: form,
       });
       if (!res.ok) throw new Error("Failed to submit order");
       const data = await res.json();
+      if(data){
+        const res = await fetch(`http://localhost:5000${data.paymentRedirect}`, {
+          method: "POST",
+          body: JSON.stringify(data.suggestedPaymentDetails),
+        })
+      console.log(res)
+      }
       alert("Order submitted successfully!");
     } catch (err) {
       console.error(err);
@@ -119,14 +124,10 @@ export default function OrderPage() {
       <div className="max-w-5xl mx-auto p-4 mt-16">
         <h1 className="text-3xl font-bold mb-6 text-center text-brand">Album Order Form</h1>
 
-        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit} enableReinitialize>
           {({ values, setFieldValue }) => (
             <Form className="space-y-6">
-              {/* All your existing form fields go here */}
-              {/* ... */}
-
               <div className="grid md:grid-cols-2 gap-4">
-                {/* Form Fields */}
                 <div>
                   <label className="label">Album Name</label>
                   <Field name="albumName" className="input input-bordered w-full" />
@@ -144,7 +145,12 @@ export default function OrderPage() {
 
                 <div>
                   <label className="label">Album Size</label>
-                  <Field name="albumSize" className="input input-bordered w-full" />
+                  <Field as="select" name="albumSize" className="select select-bordered w-full">
+                    <option value="">Select</option>
+                    <option>A4</option>
+                    <option>4X6</option>
+                    <option>12X36</option>
+                  </Field>
                 </div>
 
                 <div>
@@ -175,7 +181,6 @@ export default function OrderPage() {
                   </Field>
                 </div>
 
-                {/* Bus Option Fields */}
                 {values.deliveryOption === "Bus" && (
                   <>
                     <div className="md:col-span-2">
@@ -255,7 +260,7 @@ export default function OrderPage() {
 
                 <div className="md:col-span-2">
                   <label className="label">Order Number</label>
-                  <Field name="orderNo" className="input input-bordered w-full" />
+                  <Field name="orderNo" className="input input-bordered w-full" disabled />
                 </div>
 
                 <div className="md:col-span-2">
@@ -275,7 +280,6 @@ export default function OrderPage() {
                 </div>
               </div>
 
-              {/* Price Breakdown */}
               {imagePreviews.length > 0 && (
                 <div className="bg-gray-100 p-4 rounded-lg border border-gray-300">
                   <h3 className="text-lg font-semibold mb-2">Pricing Breakdown</h3>
@@ -296,7 +300,6 @@ export default function OrderPage() {
           )}
         </Formik>
 
-        {/* Modal Image Preview */}
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white max-w-4xl w-full p-6 rounded shadow-lg overflow-y-auto max-h-[90vh] relative">

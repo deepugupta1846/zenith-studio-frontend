@@ -1,4 +1,4 @@
-import { Search, UserCircle } from "lucide-react";
+import { Search, User, UserCircle } from "lucide-react";
 
 export default function Header() {
   return (
@@ -16,8 +16,8 @@ export default function Header() {
           />
         </div>
         <div className="avatar">
-          <div className="w-10 rounded-full ring ring-brand ring-offset-base-100 ring-offset-2">
-            <img src="/images/user-placeholder.jpg" alt="User" />
+          <div className="w-10 rounded-full ">
+            <User size={34}/>
           </div>
         </div>
       </div>
