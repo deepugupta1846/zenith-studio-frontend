@@ -15,7 +15,7 @@ export default function Banner() {
         autoplay={{ delay: 5000, disableOnInteraction: false }}
         className="absolute inset-0 z-[-2] h-full w-full"
       >
-        {["/images/cover01.jpg", "/images/cover02.jpg", "/images/cover03.jpg"].map((src, i) => (
+        {["/images/cover01.jpg", "/images/background/01.jpg", "/images/background/02.jpg", "/images/background/03.jpg",  "/images/background/04.jpg",  "/images/background/05.jpg"].map((src, i) => (
           <SwiperSlide key={i}>
             <img
               src={src}
@@ -52,11 +52,11 @@ export default function Banner() {
 
         <div data-aos="fade-left" className="md:w-1/2">
           <div className="rounded-xl overflow-hidden animate-float shadow-xl">
-            <img
+            {/* <img
               src="/images/cover01.jpg"
               alt="Photography Showcase"
               className="w-full h-full object-cover"
-            />
+            /> */}
           </div>
         </div>
       </div>

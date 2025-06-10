@@ -13,11 +13,11 @@ export default function PricingPage() {
           {/* Only Printing */}
           <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-red-500">
             <h2 className="text-xl font-semibold mb-2 text-red-500">Only Printing</h2>
-            <p className="text-3xl font-bold mb-4">₹28 - ₹38/sheet</p>
+            <p className="text-3xl font-bold mb-4">₹50 - ₹60/sheet</p>
             <ul className="text-left space-y-2">
-              <li>Glossy Paper – ₹28 per sheet</li>
-              <li>Ntr Paper – ₹38 per sheet</li>
-              <li>Binding – ₹300</li>
+              <li>Glossy Paper – ₹50 per sheet</li>
+              <li>Ntr Paper – ₹60 per sheet</li>
+              <li>Binding – ₹600</li>
               <li>Delivery Time – 2 Days</li>
             </ul>
             <button className="mt-6 w-full py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition">
@@ -28,12 +28,12 @@ export default function PricingPage() {
           {/* Design & Printing */}
           <div className="bg-white rounded-xl shadow-lg p-6 border-t-4 border-red-500">
             <h2 className="text-xl font-semibold mb-2 text-red-500">Design & Printing</h2>
-            <p className="text-3xl font-bold mb-4">₹80 - ₹90/sheet</p>
+            <p className="text-3xl font-bold mb-4">₹150 - ₹200/sheet</p>
             <ul className="text-left space-y-2">
-              <li>Glossy Paper – ₹80 per sheet</li>
-              <li>Ntr Paper – ₹90 per sheet</li>
-              <li>Binding Cost – Free</li>
-              <li>Turnaround – 1 Week</li>
+              <li>Glossy Paper – ₹150 per sheet</li>
+              <li>Ntr Paper – ₹150 per sheet</li>
+              <li>Binding – ₹600</li>
+              <li>Delivery Time – 1 Week</li>
             </ul>
             <button className="mt-6 w-full py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition">
               Get Started

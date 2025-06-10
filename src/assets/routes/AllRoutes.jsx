@@ -9,6 +9,7 @@ import App from "../../App";
 import OrderPage from "../../components/orderPage/OrderPage";
 import Orders from "../../components/dashboard/orders/Orders";
 import Pricing from "../../components/dashboard/orders/Pricing";
+import CheckOrderStatus from "../../components/landingPages/CheckOrderStatus";
 
 export default function AllRoutes() {
   return (
@@ -25,6 +26,7 @@ export default function AllRoutes() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/activate" element={<ActivatePage />} />
+            <Route path="/check-status" element={<CheckOrderStatus />} />
           </Routes>
   );
 }

@@ -49,7 +49,7 @@ export default function Navbar() {
           >
             <li><NavLink to="/">Home</NavLink></li>
             <li><NavLink to="/order">Order</NavLink></li>
-            <li><NavLink to="/status">Check Status</NavLink></li>
+            <li><NavLink to="/check-status">Check Status</NavLink></li>
             <li><NavLink to="/contact">Contact</NavLink></li>
           </ul>
         </div>
@@ -65,7 +65,7 @@ export default function Navbar() {
         <ul className="menu menu-horizontal px-1">
           <li><NavLink to="/">Home</NavLink></li>
           <li><NavLink to="/order">Order</NavLink></li>
-          <li><NavLink to="/status">Check Status</NavLink></li>
+          <li><NavLink to="/check-status">Check Status</NavLink></li>
           <li><NavLink to="/contact">Contact</NavLink></li>
         </ul>
       </div>

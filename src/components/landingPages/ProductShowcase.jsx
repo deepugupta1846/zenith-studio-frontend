@@ -1,35 +1,36 @@
 import React from "react";
 import { Carousel } from "@mantine/carousel";
 import { motion } from "framer-motion";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import "@mantine/carousel/styles.css";
 
 const products = [
   {
     title: "Wedding Album",
     subtitle: "Premium quality glossy paper album",
-    image: "/images/wedding.jpg",
+    image: "/images/BRIDE IMAGE/jpg/arto-suraj1.jpg",
   },
   {
     title: "Event Coverage",
     subtitle: "Best for birthdays, parties, and concerts",
-    image: "/images/event.jpg",
+    image: "/images/cover/01.jpg",
   },
   {
     title: "Photo Frames",
     subtitle: "Custom framed memories to cherish",
-    image: "/images/frame.jpg",
+    image: "/images/cover/02.jpg",
   },
   {
-    title: "ID Cards",
+    title: "MUG",
     subtitle: "Printed and laminated office/school ID cards",
-    image: "/images/idcard.jpg",
+    image: "/images/MUG/01.jpg",
   },
 ];
 
 export default function ProductShowcase() {
   return (
-    <div className="min-h-screen bg-[#fdf8f1] py-16 px-6">
-      <div className="max-w-6xl mx-auto text-center">
+    <div className="min-h-screen bg-[#fdf8f1] py-16 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto text-center relative">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,43 +48,56 @@ export default function ProductShowcase() {
           From stunning wedding albums to stylish photo frames — discover what we can do!
         </motion.p>
 
-        <Carousel
-          withIndicators
-          controlSize={40}
-          controlsOffset="xs"
-          slideSize="33.333333%"
-          slideGap="xl"
-          loop
-          align="start"
-          breakpoints={[
-            { maxWidth: "md", slideSize: "50%" },
-            { maxWidth: "sm", slideSize: "100%" },
-          ]}
-          className="rounded-xl"
-        >
-          {products.map((product, index) => (
-            <Carousel.Slide key={index}>
-              <div className="shadow-lg rounded-xl overflow-hidden bg-white dark:bg-neutral transition duration-300 hover:shadow-xl">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-64 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold text-red-500">
-                    {product.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mt-1 mb-4">
-                    {product.subtitle}
-                  </p>
-                  <button className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-lg transition duration-200">
-                    Learn More
-                  </button>
+        <div className="relative">
+          <Carousel
+            withIndicators
+            slideGap="xl" // Gaps between the slides
+            slideSize="33.333333%"
+            align="start"
+            loop
+            breakpoints={[
+              { maxWidth: "md", slideSize: "50%" },
+              { maxWidth: "sm", slideSize: "100%" },
+            ]}
+            controlSize={50}
+            nextControlIcon={<IconChevronRight size={30} />}
+            previousControlIcon={<IconChevronLeft size={30} />}
+            styles={{
+              control: {
+                backgroundColor: "#fff",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+                color: "#e11d48",
+                borderRadius: "9999px",
+                border: "1px solid #e5e7eb",
+              },
+              controls: {
+                top: "50%",
+                transform: "translateY(-50%)",
+              },
+            }}
+          >
+            {products.map((product, index) => (
+              <Carousel.Slide key={index}>
+                <div className="group shadow-xl rounded-2xl overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.05] mx-2">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-5 text-left">
+                    <h3 className="text-xl font-bold text-gray-800 group-hover:text-red-500 transition duration-200">
+                      {product.title}
+                    </h3>
+                    <p className="text-gray-500 text-sm mt-1 mb-4">{product.subtitle}</p>
+                    <button className="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition duration-200">
+                      Learn More
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </Carousel.Slide>
-          ))}
-        </Carousel>
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </div>
   );

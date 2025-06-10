@@ -39,6 +39,11 @@ export default function OrderPage() {
 
     setPricing({ baseRate, quantity, fixedCost, subtotal, gst, total });
   };
+const getFormattedDate = (date) => date.toISOString().split("T")[0];
+
+const today = new Date();
+const delivery = new Date();
+delivery.setDate(today.getDate() + 3);
 
   const initialValues = {
     albumName: "",
@@ -53,8 +58,8 @@ export default function OrderPage() {
     district: "",
     landmark: "",
     pincode: "",
-    orderDate: "",
-    deliveryDate: "",
+    orderDate: getFormattedDate(today),
+    deliveryDate: getFormattedDate(delivery),
     albumFiles: [],
     orderNo: defaultOrderNo,
     notes: "",
@@ -167,8 +172,8 @@ export default function OrderPage() {
                 <div>
                   <label className="label">Bag Type</label>
                   <Field as="select" name="bagType" className="select select-bordered w-full">
-                    <option>Normal</option>
-                    <option>3D Bag</option>
+                    <option>Normal Bag</option>
+                    <option>Photo Bag</option>
                   </Field>
                 </div>
 

@@ -38,8 +38,8 @@ export default function LocationPage() {
 
         <div className="mt-10 text-gray-700 dark:text-gray-300">
           <h3 className="text-xl font-semibold text-red-600 mb-2">Studio Address</h3>
-          <p>Zenith Studio, Main Road, YourCity, YourState - 123456</p>
-          <p>Phone: +91 98765 43210</p>
+          <p>Zenith Studio, Near head post office, Gewalbigha, Gaya, Bihar 823001</p>
+          <p>Phone: +91 7761011403</p>
           <p>Email: contact@zenithstudio.com</p>
         </div>
       </div>
