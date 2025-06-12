@@ -1,6 +1,6 @@
 import AuthService from "./auth/AuthService";
 import Axios from "axios";
-const SERVER_URL = "http://localhost:5000"
+const SERVER_URL = import.meta.env.VITE_API_URL;
 
 const Gateway = {
   request: (url, method, data) => {
@@ -67,6 +67,7 @@ const Gateway = {
     if (AuthService.getAuthToken()) {
       headersObj.Authorization = "Token " + AuthService.getAuthToken();
     }
+    console.log(headersObj)
     return headersObj;
   },
 

@@ -1,24 +1,31 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import DashboardLayout from "../DashboardLayout";
-import { getAllOrders } from "../../../store/reducers/orderSlice";
+import { getAllOrders, getAllUserOrders } from "../../../store/reducers/orderSlice";
 import { MoreVertical } from "lucide-react";
+const API_URL=import.meta.env.VITE_API_URL;
 
 export default function Orders() {
   const dispatch = useDispatch();
   const { orders, loading, error } = useSelector((state) => state.order);
+  const { user } = useSelector((state) => state.auth);
   const [menuOpen, setMenuOpen] = useState(null);
 
   useEffect(() => {
-    dispatch(getAllOrders());
-  }, [dispatch]);
+    if(user && user.userType == "admin"){
+      dispatch(getAllOrders());
+    }else{
+      dispatch(getAllUserOrders(user.email));
+    }
+    
+  }, [user, dispatch]);
 
   const toggleMenu = (id) => {
     setMenuOpen(menuOpen === id ? null : id);
   };
 
 const handleDownload = (orderNo) => {
-  window.open(`http://localhost:5000/api/orders/download/${orderNo}`, "_blank");
+  window.open(`${API_URL}/api/orders/download/${orderNo}`, "_blank");
 };
 
   return (

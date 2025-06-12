@@ -50,6 +50,28 @@ export const getAllOrders = createAsyncThunk(
   }
 );
 
+export const getAllUserOrders = createAsyncThunk(
+  "order/getAllUserOrders",
+  async (_, thunkAPI) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/orders/user", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "Failed to fetch orders");
+      }
+
+      return await res.json();
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 
 const orderSlice = createSlice({
   name: "order",
@@ -92,6 +114,17 @@ const orderSlice = createSlice({
     state.orders = action.payload;
     })
     .addCase(getAllOrders.rejected, (state, action) => {
+    state.loading = false;
+    state.error = action.payload;
+    })
+    .addCase(getAllUserOrders.pending, (state) => {
+    state.loading = true;
+    })
+    .addCase(getAllUserOrders.fulfilled, (state, action) => {
+    state.loading = false;
+    state.orders = action.payload;
+    })
+    .addCase(getAllUserOrders.rejected, (state, action) => {
     state.loading = false;
     state.error = action.payload;
     });

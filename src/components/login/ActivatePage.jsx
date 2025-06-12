@@ -5,19 +5,19 @@ import { showAlert } from "../../enum/SweetAlert";
 
 export default function ActivatePage() {
   const [searchParams] = useSearchParams();
-  const user_id = searchParams.get("user_id");
+  const userid = searchParams.get("userid");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user_id) {
-      console.log("Token from URL:", user_id);
+    if (userid) {
+      console.log("Token from URL:", userid);
       activateUser();
     }
-  }, [user_id]); // Include token in dependency array
+  }, [userid]); // Include token in dependency array
 
   const activateUser = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/auth/verify-user/${user_id}`, {
+      const res = await fetch(`http://localhost:5000/api/auth/verify-user/${userid}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json"

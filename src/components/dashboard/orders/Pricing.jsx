@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import DashboardLayout from "../DashboardLayout";
 
-const SERVER_URL = "http://localhost:5000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const pricingSchema = Yup.object().shape({
   albumType: Yup.string().required("Required"),
@@ -20,13 +20,13 @@ export default function Pricing() {
   const [isOpen, setIsOpen] = useState(false);
 
   const fetchPrices = async () => {
-    const res = await axios.get(`${SERVER_URL}/api/prices`);
+    const res = await axios.get(`${API_URL}/api/prices`);
     setPrices(res.data);
   };
 
   const handleCreate = async (values, actions) => {
     try {
-      await axios.post(`${SERVER_URL}/api/prices`, values);
+      await axios.post(`${API_URL}/api/prices`, values);
       setIsOpen(false);
       fetchPrices();
     } catch (err) {

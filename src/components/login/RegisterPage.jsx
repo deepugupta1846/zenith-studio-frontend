@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Corprate from "../Corprate";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function RegisterPage() {
   const [otpSent, setOtpSent] = useState(false);
@@ -50,13 +51,13 @@ export default function RegisterPage() {
   const checkEmailAndSendOtp = async (email) => {
     try {
       setServerError("");
-      const res = await fetch(`http://localhost:5000/api/auth/check-email?email=${email}`);
+      const res = await fetch(`${API_URL}/api/auth/check-email?email=${email}`);
       const data = await res.json();
       if (data.exists) {
         throw new Error("Email already registered");
       }
 
-      const otpRes = await fetch(`http://localhost:5000/api/auth/send-otp`, {
+      const otpRes = await fetch(`${API_URL}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -74,7 +75,7 @@ export default function RegisterPage() {
   const handleResendOtp = async (email) => {
     try {
       setServerError("");
-      const otpRes = await fetch(`http://localhost:5000/api/auth/send-otp`, {
+      const otpRes = await fetch(`${API_URL}/api/auth/send-otp`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -107,7 +108,7 @@ export default function RegisterPage() {
 
     setServerError("");
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch(`${process.env.BACKEND_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

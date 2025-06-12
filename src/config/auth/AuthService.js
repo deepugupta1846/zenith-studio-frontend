@@ -1,6 +1,5 @@
 import CookieHandler from "../CookieHandler";
 import Gateway from "../Gateway";
-const SERVER_URL = "http://localhost:5000"
 
 const AuthService = {
   signUpUser: (data) => {
@@ -18,16 +17,17 @@ const AuthService = {
     AuthService.logoutUser();
     return Gateway.request("/api/auth/login", "POST", data).then(
       (res) => {
-        const token = res.token;
-        if (token) {
-          AuthService.setAuthToken(token);
           return res;
-        }
       },
       (res) => {
         return Promise.reject(res);
       }
     );
+  },
+
+  getUserDetails:()=>{
+      let url = '/api/auth/profile'
+      return Gateway.request(url, "GET")
   },
 
   getAuthToken: () => {
