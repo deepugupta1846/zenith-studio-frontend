@@ -1,13 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import AuthService from "../../config/auth/AuthService";
 
-const SERVER_URL = "http://localhost:5000";
+const API_URL=import.meta.env.VITE_API_URL;
 
 // ✅ Async thunk for placing an order
 export const createOrder = createAsyncThunk(
   "order/createOrder",
   async (orderData, thunkAPI) => {
     try {
-      const res = await fetch(`${SERVER_URL}/api/orders`, {
+      const res = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,9 +33,9 @@ export const getAllOrders = createAsyncThunk(
   "order/getAllOrders",
   async (_, thunkAPI) => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API_URL}/api/orders`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${AuthService.getAuthToken()}`,
         },
       });
 

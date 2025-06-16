@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Corprate from "../Corprate";
 import { State, City } from "country-state-city";
+const API_URL=import.meta.env.VITE_API_URL;
 
 export default function OrderPage() {
   const [imagePreviews, setImagePreviews] = useState([]);
@@ -104,14 +105,14 @@ delivery.setDate(today.getDate() + 3);
     });
 
     try {
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         body: form,
       });
       if (!res.ok) throw new Error("Failed to submit order");
       const data = await res.json();
       if(data){
-        const res = await fetch(`http://localhost:5000${data.paymentRedirect}`, {
+        const res = await fetch(`${API_URL}${data.paymentRedirect}`, {
           method: "POST",
           body: JSON.stringify(data.suggestedPaymentDetails),
         })
@@ -163,7 +164,6 @@ delivery.setDate(today.getDate() + 3);
                   <Field as="select" name="designPrint" className="select select-bordered w-full">
                     <option value="">Select</option>
                     <option value="Print">Print</option>
-                    <option value="Design">Design</option>
                     <option value="Print and Design">Print and Design</option>
                   </Field>
                   <ErrorMessage name="designPrint" component="div" className="text-red-500 text-sm" />
