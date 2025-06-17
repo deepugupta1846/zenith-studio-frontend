@@ -45,7 +45,7 @@ export default function PricingPage() {
             <h2 className="text-xl font-semibold mb-2 text-red-500">Custom Bag Option</h2>
             <p className="text-lg font-medium mb-4">Let’s Discuss!</p>
             <ul className="text-left space-y-2">
-              <li>Normal & 3D Bag Available</li>
+              <li>Normal & Photo Bag Available</li>
               <li>Option to change to photo bag</li>
               <li>Price on request</li>
               <li>Custom packaging requests accepted</li>

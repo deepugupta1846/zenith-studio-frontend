@@ -16,6 +16,10 @@ import { store } from './store/store';
 import { Provider } from "react-redux";
 import ActivatePage from './components/login/ActivatePage';
 import AllRoutes from './assets/routes/AllRoutes';
+// Import Slick Carousel styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
