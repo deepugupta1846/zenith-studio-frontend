@@ -7,20 +7,20 @@ import { getUserDetails } from "../../store/reducers/authSlice";
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const {user} = useSelector((state)=> state.auth)
+  const { user } = useSelector((state) => state.auth);
 
-  console.log(user)
+  console.log(user);
 
   const handleLogout = () => {
     console.log("Logging out...");
     navigate("/");
   };
 
-  useEffect(()=>{
-    dispatch(getUserDetails())
-  },[])
+  useEffect(() => {
+    dispatch(getUserDetails());
+  }, []);
 
   return (
     <aside className="bg-white border-r w-64 h-screen p-4 flex flex-col">
@@ -29,20 +29,28 @@ export default function Sidebar() {
         <h2 className="text-2xl font-bold mb-8 text-brand">Zenith Studio</h2>
         <ul className="menu space-y-2">
           <li>
-            <Link to="/dashboard/order-list/" className="flex items-center gap-2">
+            <Link
+              to="/dashboard/order-list/"
+              className="flex items-center gap-2"
+            >
               <List size={18} />
               All Orders
             </Link>
           </li>
         </ul>
-        {user && user.userType == "admin" && <ul className="menu space-y-2">
-          <li>
-            <Link to="/dashboard/pricing/" className="flex items-center gap-2">
-              <FaRupeeSign size={18} />
-              Pricing
-            </Link>
-          </li>
-        </ul>}
+        {user && user.userType == "Admin" && (
+          <ul className="menu space-y-2">
+            <li>
+              <Link
+                to="/dashboard/pricing/"
+                className="flex items-center gap-2"
+              >
+                <FaRupeeSign size={18} />
+                Pricing
+              </Link>
+            </li>
+          </ul>
+        )}
         <ul className="menu space-y-2">
           <li>
             <Link to="/dashboard/pricing/" className="flex items-center gap-2">
