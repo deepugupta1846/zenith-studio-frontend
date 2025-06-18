@@ -11,7 +11,30 @@ export const createPrice = createAsyncThunk(
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${AuthService.getAuthToken()}`,
+        },
+        body: JSON.stringify(priceData),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "Price Creation failed");
+      }
+      return await res.json();
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updatePrice = createAsyncThunk(
+  "price/updatePrice",
+  async ({ priceData, priceId }, thunkApi) => {
+    try {
+      const res = await fetch(`${API_URL}/api/price/${priceId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${AuthService.getAuthToken()}`,
         },
         body: JSON.stringify(priceData),
       });
