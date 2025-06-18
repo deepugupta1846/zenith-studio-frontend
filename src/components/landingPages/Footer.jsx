@@ -30,13 +30,13 @@ export default function Footer() {
           <h3 className="text-lg font-semibold mb-3 text-red-600">Contact Us</h3>
           <ul className="space-y-2 text-sm">
             <li className="flex items-center gap-2">
-              <FaPhone className="text-red-500" /> +91 7761011403
+              <FaPhone className="text-red-500" /> 2220403
             </li>
             <li className="flex items-center gap-2">
-              <FaEnvelope className="text-red-500" /> contact@zenithstudio.com
+              <FaEnvelope className="text-red-500" /> zenithstudio57@yahoo.in
             </li>
             <li>
-              Near head post office, Gewalbigha, Gaya, Bihar 823001
+              Peer Mansoor Road, Gaya, Bihar 823001
             </li>
           </ul>
         </div>

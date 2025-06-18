@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Corprate from "../Corprate";
 import { State, City } from "country-state-city";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllPrice } from "../../store/reducers/priceSlice";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function OrderPage() {
@@ -12,21 +14,28 @@ export default function OrderPage() {
   const [showModal, setShowModal] = useState(false);
   const [pricing, setPricing] = useState({});
   const [defaultOrderNo, setDefaultOrderNo] = useState("");
+  const dispatch = useDispatch();
+
+  const { prices, loading, error } = useSelector((state) => state.price);
+
+   useEffect(() => {
+      dispatch(getAllPrice());
+    }, [dispatch]);
 
   useEffect(() => {
     // fetch dynamic data
-    const fetchPricing = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/price`);
-        const data = await res.json();
-        console.log(data);
-        setPricing(data); // pricing will be an array
-      } catch (error) {
-        console.error("Failed to fetch pricing", error);
-      }
-    };
+    // const fetchPricing = async () => {
+    //   try {
+    //     const res = await fetch(`${API_URL}/api/prices`);
+    //     const data = await res.json();
+    //     console.log(data);
+    //     setPricing(data); // pricing will be an array
+    //   } catch (error) {
+    //     console.error("Failed to fetch pricing", error);
+    //   }
+    // };
 
-    fetchPricing();
+    // fetchPricing();
     const indianStates = State.getStatesOfCountry("IN");
     setStates(indianStates);
     // setStates(State.getStatesOfCountry("IN"));
@@ -45,7 +54,7 @@ export default function OrderPage() {
 
     // make dynamic price
     const matchingPrice = pricing.find(
-      (p) => p.albumType === values.designPrint && p.userType === "admin" // You can update this based on logged-in user role
+      (p) => p.albumType === values.designPrint // You can update this based on logged-in user role
     );
     if (!matchingPrice) {
       console.log("No matching pricing found");
